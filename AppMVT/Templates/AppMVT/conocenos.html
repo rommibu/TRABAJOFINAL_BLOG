@@ -1,0 +1,132 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+{% block titulo_de_pagina %}
+
+<h1 class="mb-5"></h1>
+{% endblock %}
+
+{% block contenido %}
+
+#
+<!DOCTYPE html>
+#<html lang="en">
+
+<head>
+
+    <title>INFORMACION SERVICIO SOCIAL BARRIAL</title>
+    <title>PAGINA PARADIGMA ARTE+IDEAS</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="Portada_Paradigma.png">
+    <style>
+        body {
+            background-color: rgb(129, 150, 145);
+        }
+
+        .color-fondo {
+            background-color: bisque;
+        }
+
+        .color-fondo2 {
+            background-color: cornsilk;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <center>
+            <h1 class="mb-55">BIENVENIDOS A PARADIGMAS, ESPACIO DE SERVICIO SOCIAL PARA LA COMUNIDAD BARRIAL</h1>
+        </center>
+        <header>
+            <nav>
+                <ul>
+                    <img src="Proyecto\IMAGENES\os.jpg"> height="400" width="500"><br><br><br>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="color-fondo">
+            <h1>TENDRAS A MANO TODA LA INFORMACION QUE NECESITAS DE TU SERVICIO SOCIAL A MANO</h1>
+            <P>
+            <h2>En PARADIGMA<b></b> Unificamos todo lo referente a los servicios sociales de Grupos Familiares,
+                pertenecientes a nuestra zona barrial</h2>
+            </P><br><br>
+            <p>
+            <h3>Si deseas informarte personalmente, o precisas hacer uso de nuestro espacio, comunicate con nosotros al
+                <a href="https://wa.me/5493516079540?text=Hola,%20para%20informacion%20indicanos%20dia%20horario%20y%20cantidad%20de%20horas%20que%20deseas"
+                    target="_BLANK">Whatsapp</a></h3>
+            </p><br><br>
+
+            <form method="post"><br>
+                <p>Indicanos fecha posible de reunion?:</p>
+                <input type="date" required=""><br><br>
+                <p>Indicanos Hora posible de la reunion?:</p>
+                <input type="time" required=""><br><br>
+            </form>
+
+
+        </div>
+        <center>
+            <br><br>
+            <h3><a href={{ galeria_de_fotos.html }} target="_BLANK">GALERIA - ALGUNO DE NUESTROS EVENTOS</a></h3><br><br>
+        </center>
+        <div class="color-fondo2">
+            <h1>OBRAS SOCIALES ADHERIDAS:</h4>
+                <table>
+                    <tr>
+                        <td>
+                            <ol>
+                                <li><b>Apros</b><br> </li><br>
+                                <li><b>Medife</b><br> </li><br>
+                                <li><b>Swiss Medical</b><br> </li><br>
+                                <li><b>Pami</b><br> </li><br>
+                                <li><b>Omint</b><br> </li><br>
+                                <li><b>Galeno</b><br> </li><br>
+                                <li><b>Prevencion Salud</b><br> </li><br>
+                                <li><b>Osde</b><br> </li><br>
+                                <li><b>Aca Salud</b><br> </li><br>
+                                <li><b>Hospital Italiano</b><br> </li><br>
+                            </ol>
+                        </td>
+                    </tr>
+                </table>
+        </div>
+
+        <img src="Proyecto\AppMVT\IMAGENES\info.jpg" height="600" width="300">
+        <h6>NOS GUSTARIA SABER QUE INFORMACION TE GUSTARIA PROPORCIONARAMOS <b>PARADIGMA ARTE+IDEAS</b></h6>
+        <form method="post">
+            <input type="text" required="" value="Nombre de pila"><br><br>
+            <input type="email" required="" value="Mail"><br><br>
+            <textarea type="comentario">"Escribe tu propuesta y/o comentario"</textarea><br><br>
+            <input type="submit"><br><br>
+        </form>
+    </div>
+    <aside>
+
+        <div>
+            <h1>Que es PARADIGMA ARTE+IDEAS?</h1>
+            <h2>
+                <p>En Paradigma arte + ideas, nos orientamos al conjunto de actividades humanas de índole creativa,
+                    informativa y/o comunicativa,</p>
+                <p>persiguiendo mediante la cultura y los servicios sociales, una finalidad estética de manera
+                    subjetiva, un apoyo social a la mano de los vecinos;</p>
+                <p>de este modo dejamos fluir el sentir del día a día con libertad, informacion, servicios y utopía
+                    total!</p>
+            </h2>
+        </div>
+
+        ><footer>
+            <h2><a href="https://www.facebook.com/Paradigmasarteideas-110791558389516" target="_BLANK">Seguinos en
+                    nuestras redes sociales facebook</a></h2>
+
+        </footer>
+    </aside>
+</body>
+
+</html>
+
+
+
+{% endblock %}

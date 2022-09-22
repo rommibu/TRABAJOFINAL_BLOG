@@ -1,0 +1,43 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %} 
+
+
+
+{% block contenido %}
+<h1>Ingresa los datos necesarios para participar</h1>
+
+<form action="{% url 'Eventos' %}", method="POST"> {% csrf_token %}
+  
+          <p class="center">Registrate y estaras participando por una entrada para el evento de autos mas importante del pais.
+             De esta forma estaras contribuyendo tambien en nuestra ayuda social! Animate!!! </p></center>
+
+  <table>
+
+    {{ formularioc.as_table }}
+    
+  </table>
+
+    <input type="submit" value="Enviar">
+    
+    
+    
+</form>
+
+
+<h1>Buscate y valida si estas participando</h1>
+
+
+<form action="{% url 'Buscar' %}" method="GET"> {% csrf_token %}
+
+<p>Nombre: <input type="text" name="nombre"></p>
+
+
+<input type="submit", value="Buscar">
+
+</form>
+
+<h2 >{{ mensaje }}</h2>
+
+
+{% endblock %}

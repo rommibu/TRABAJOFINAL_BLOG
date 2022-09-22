@@ -1,0 +1,59 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+{% block titulo_de_pagina %}
+<h1 class="mb-5"></h1>  
+{% endblock %}
+
+{% block contenido %} 
+
+<h1 class="mb-55">Planes de Cobertura</h1> 
+
+{% for cobertura in listado %}
+
+
+<div class="card mb-56">
+    <div class="card-body">
+        <h2 class="card-title">Cobertura: {{ cobertura.denominacion }}</h2>
+        <p class="card-text">{{ cobertura.codigo }}</p>
+    </div>
+
+    <div class="containere">
+        <div class="card">
+          <div class="box">
+            <div class="content">
+              <h2>210</h2>
+              <h3>PLAN 210</h3>
+              <p>NIÑEZ</p>
+              <a href="https://salud.gob.ar/dels/entradas/derecho-humano-la-salud-de-los-ninos-ninas-y-adolescentes#:~:text=De%20acuerdo%20con%20la%20Convenci%C3%B3n,las%20enfermedades%20y%20la%20rehabilitaci%C3%B3n."target="_BLANK">Mas información</a>
+            </div>
+          </div>
+        </div>
+      
+        <div class="card">
+          <div class="box">
+            <div class="content">
+              <h2>310</h2>
+              <h3>PLAN 310</h3>
+              <p>ADOLESCENCIA</p>
+              <a href="https://www.who.int/es/news-room/fact-sheets/detail/adolescents-health-risks-and-solutions"target="_BLANK">Mas información</a>
+            </div>
+          </div>
+        </div>
+      
+        <div class="card">
+          <div class="box">
+            <div class="content">
+              <h2>410</h2>
+              <h3>PLAN 410</h3>
+              <p>ADULTES</p>
+              <a href="https://plansalud.com.ar/situacion/plan-de-salud-para-jubilados/"target="_BLANK">Mas información</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endfor %}
+
+{% endblock %}

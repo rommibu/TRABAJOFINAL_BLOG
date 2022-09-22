@@ -1,0 +1,32 @@
+{% extends "AppMVT/padre.html" %}
+
+
+{% load static %}
+
+
+{% block contenido %}
+
+
+{% if mensaje %}
+
+<h2>{{ mensaje }}</h2>
+
+{% else %}
+
+
+<h1>RESULTADOS DE LA BUSQUEDA</h1>
+
+{% for familia in documentos %}
+
+<h2>{{ familia.nombre }}</h2>
+<h2>{{ familia.apellido }}</h2>
+<h2>{{ familia.dni }}</h2>
+--
+
+{% endfor %}
+
+
+{% endif %}
+
+
+{% endblock %}

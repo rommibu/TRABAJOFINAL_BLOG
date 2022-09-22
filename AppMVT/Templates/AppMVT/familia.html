@@ -1,0 +1,34 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+
+{% if miFormulario.errors %}
+<p style="color:firebrick;">Ingreso algun dato incorrecto, por favor verifique!</p>
+{% endif %}
+
+
+{% block contenido %} 
+
+
+<center>
+    
+{% block titulo_de_pagina %}
+<h1 class="mb-5"></h1> 
+{% endblock %}
+
+
+<form action="{% url 'familia' %}" method="POST"> {% csrf_token %}
+
+
+<table>
+    {{ formulario.as_table }}
+</table>
+
+<input type="submit", value="Enviar">
+
+</center>
+
+</form>
+
+{% endblock %}

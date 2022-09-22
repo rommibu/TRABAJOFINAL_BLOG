@@ -1,0 +1,31 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+
+{% block contenido %}
+
+
+
+
+{% if miFormulario.errors %}
+<p style="color:firebrick;">Ingreso algun dato incorrecto, por favor verifique!</p>
+{% endif %}
+
+<center>
+<h1>FORMULARIO INFORMACION LABORAL</h1>
+
+
+<form action="{% url 'formularioTrabajo' %}" method="POST"> {% csrf_token %}
+
+
+<table>
+    {{ formulario.as_table }}
+</table>
+
+<input type="submit", value="Enviar">
+
+</form>
+
+</center>
+{% endblock %}

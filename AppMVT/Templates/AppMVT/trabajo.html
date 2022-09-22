@@ -1,0 +1,20 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+{% block titulo_de_pagina %}
+<h1 class="mb-5">INFORMACION LABORAL DE ASOCIADOS</h1> 
+{% endblock %}
+
+{% block contenido %} 
+<center>
+    <br><br><h1>TRABAJOS DE ASOCIADOS INGRESADOS</h1>
+</center>
+    {% if trabajos %} 
+        {% for trabajo in trabajos %}
+        <ul>
+            <br><li><h2>{{ trabajo.empresa }}</h2></li><br><br>
+        </ul>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

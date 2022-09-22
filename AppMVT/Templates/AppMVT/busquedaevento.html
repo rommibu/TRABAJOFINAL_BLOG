@@ -1,0 +1,34 @@
+{% extends "AppMVT/padre.html" %}
+
+
+{% load static %}
+
+
+{% block contenido %}
+
+
+{% if mensaje %}
+
+<h2>{{ mensaje }}</h2>
+
+{% else %}
+
+
+<h1>RESULTADO BUSQUEDA</h1>
+
+<h1>RESULTADOS DE LA BUSQUEDA</h1>
+
+{% for Autos in personas %}
+
+<h2>{{ Autos.nombre }}</h2>
+<h2>{{ Autos.escuderias }}</h2>
+<h2>{{ Autos.piloto }}</h2>
+--
+
+{% endfor %}
+
+
+{% endif %}
+
+
+{% endblock %}

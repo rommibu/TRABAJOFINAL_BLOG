@@ -1,0 +1,25 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+
+{% block contenido %}
+<h1 class="mb-5">ESTE TITULO VIENE DE INICIO</h1>
+
+
+
+<h1>Buscate y valida si estas participando</h1>
+
+
+<form action="{% url 'Buscar' %}" method="GET"> {% csrf_token %}
+
+<p>Nombre: <input type="text" name="nombre"></p>
+
+
+<input type="submit", value="Buscar">
+
+</form>
+
+<h2 >{{ mensaje }}</h2>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+{% block titulo_de_pagina %}
+    {{ detallepost.titulo }}
+{% endblock %}
+
+{% block imagen %}
+    {{ detallepost.imagen }}
+{% endblock %}
+
+{% block contenido %} 
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="post" id="">Post!</button>
+    </form>
+{% endblock %}
+

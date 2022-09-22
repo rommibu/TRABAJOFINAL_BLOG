@@ -1,0 +1,31 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+{% block titulo_de_pagina %}
+<h1 class="mb-5">ASOCIADOS</h1>
+{% endblock %}
+
+
+{% block contenido_de_pagina %}
+
+{% if mensaje %}
+<h2>{{ mensaje }}</h2>
+
+{% else %}
+
+<br><h1>RESULTADO BUSQUEDA</h1><br><br>
+
+<br><h1>RESULTADOS DE LA BUSQUEDA</h1><br><br>
+
+{% for dni in dni %}
+
+<h2>{{ Familia.nombre }}</h2>
+<h2>{{ Familia.dni }}</h2>
+--
+
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}
