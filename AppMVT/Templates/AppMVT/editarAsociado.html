@@ -1,0 +1,24 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+{% block titulo_de_pagina %}
+<h1 class="mb-5"></h1>
+{% endblock %}
+
+
+
+{% block contenido %}
+<br><h1>PUEDE EDITAR INFORMACION DEL ASOCIADO {{ nombre_familia }}</h1><br><br>
+<form action="{% url 'editarAsociado' id %}" method="POST"> {% csrf_token %}
+
+<table>
+
+    {{ formulario.as_table }}
+</table>
+
+<input type="submit", value="Enviar">
+    
+</form> 
+
+{% endblock %}

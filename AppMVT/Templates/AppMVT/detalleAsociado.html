@@ -1,0 +1,23 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+{% block titulo_de_pagina %}
+<h1 class="mb-5"></h1>
+{% endblock %}
+
+
+{% block contenido %}
+
+
+<br><h1>DETALLE DEL ASOCIADO</h1><br><br>
+
+
+<P>NOMBRE : <i>{{ familia.nombre }}</i></P>
+<P>APELLIDO: <i>{{ familia.apellido }}</i></P>
+<P>EMAIL: <i>{{ familia.mail }}</i></P>
+
+
+
+{% endblock %}
+

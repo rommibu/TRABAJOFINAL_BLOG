@@ -35,7 +35,15 @@
                 <a class="button-nav" role="button" href="{% url 'conocenos' %}">Conocenos</a>
                 <a class="button-nav" role="button" href="{% url 'familia' %}">Registrate</a>
                 <a class="button-nav" role="button" href="{% url 'busquedaFamilia' %}">Asociados</a>  
-                <a class="button-nav" role="button" href="{% url 'Eventos' %}"> Proximos eventos</a> 
+                <a class="button-nav" role="button" href="{% url 'Eventos' %}"> Proximos eventos</a>
+                {% if not request.user.is_authenticated %}
+                <a class="btn btn-primary" href="{% url 'login %}">BIENVENIDO QUERIDO ASOCIADO!</a> 
+                <a class="btn btn-primary" href="{% url 'register %}">ASOCIATE!</a> 
+                {% else %}
+                <p>Bienvenido {{ user.username }}</p>
+                <img src="{{ imagen }}" alt="">
+                <a class="btn btn-primary" href="{% url 'logout %}">HASTA PRONTO QUERIDO ASOCIADO!</a> 
+                {% endif %}
             </div>
         </nav>
         <!-- Masthead-->

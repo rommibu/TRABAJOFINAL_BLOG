@@ -1,0 +1,26 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+{% block titulo_de_pagina %}
+<h1 class="mb-5"></h1>
+{% endblock %}
+
+
+{% block contenido %}
+
+
+<br><h1>LISTA ASOCIADOS</h1><br><br>
+
+{% for familia in object_list %}
+
+    <ul>
+        <li><h3>{{ familia }}</h3></li>
+    </ul>
+
+   
+{% endfor %}
+
+
+{% endblock %}
+

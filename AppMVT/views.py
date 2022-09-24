@@ -2,21 +2,18 @@ from socket import fromshare
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Coberturasalud, Familia, Trabajo, Autos, Post, Category, Comment
-from AppMVT.forms import FormularioFamilia, FormularioTrabajo, AutosFormu
+from AppMVT.forms import FormularioFamilia, FormularioTrabajo, AutosFormu, UserRegisterForm, AvatarForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 import datetime
-from  django.urls import reverse_lazy
-#from django.contrib.auth.mixins import loginRequiredMixin
+#from django.contrib.auth.mixins import loginRequiredMixi
+from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+
 from .models import*
-from .forms import UserRegisterForm
 from django.contrib import messages
 from django.views.generic import TemplateView
-from .models import Comment, Post, Category
-
-
 
 
 
@@ -141,7 +138,7 @@ def editarAsociado(request, id):
             asociados=Familia.objects.all()
             return render(request, "AppMVT/leerFamilia.html", {"asociados":asociados})
     else:
-        form=FormularioFamilia(initial={"nombre":family.nombre, "apellido":family.apellido, "dni":family.dni, "extranjero":family.extranjero, "enfermedadbase":family.enfermedadbase, "mail":family.mail})
+        form=FormularioFamilia(initial={"nombre":family.nombre, "apellido":family.apellido, "dni":family.dni, "extranjero":family.extranjero, "enfermedadbase":family.enfermedadbase, "mail":family.mail, "id":family.id})
         return render(request, "AppMVT/editarAsociado.html", {"formulario":form, "dni_Familia":family.dni})
 
         
@@ -159,7 +156,7 @@ def buscar(request):
         return render(request, "AppMVT/resultadoBusqueda.html", {"mensaje": "No hay Asociado con este DNI"})
         
      
-
+@login_required
 def listar_trabajos(request):
     trabajos = Trabajo.objects.all()
     contexto = {'trabajos':trabajos}
@@ -197,18 +194,14 @@ def busquedaescu(request):
 
 #VISTAS BASADAS EN CLASES
 
-"""class FamiliaList(loginRequiredMixin, ListView):
+class AsociadoList(ListView):
     model = Familia 
-    template_name = 'AppMVT/leerfamilia_list.html'
+    template_name = 'AppMVT/leerAsociado.html'
 
-class FamiliaDetalle(loginRequiredMixin, DetailView):
+class AsociadoDetalle(DetailView):
     model=Familia
-    template_name='AppMVT/familia_detalle.html'
+    template_name='AppMVT/detalleAsociado.html'
 
-class FamiliaDetalle(loginRequiredMixin, CreateView):
-    model=Familia
-    success_url: reverse_lazy('familia_listar')
-    fields=['nombre', 'apellido', 'email']"""
 
 
 # Buscar info en las tablas.
@@ -229,17 +222,17 @@ def Buscar(request):
 
 
 def login_request(request):
-    if request.method=="POST":
+    if request.method == "POST":
         form=AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            usuario=form.cleaned_data.get('username')
-            contraseña=form.cleaned_data.get('password')
+            usu=request.POST["username"]
+            clave=request.POST["password"]
 
-            usuario=authenticate(username=usuario, password=contraseña)
+            usuario=authenticate(username=usu, password=clave)
 
             if usuario is not None:
                 login(request, usuario)
-                return render(request, 'AppMVT/inicio.html', {'mensaje': f"Bienvenido a Paradigma! {usuario}"})
+                return render(request, 'AppMVT/inicio.html', {'mensaje':f"Bienvenido a Paradigma {usuario}"})
             else:
                 return render(request, 'AppMVT/login.html', {"form":form,'mensaje': 'Usuario o contraseña incorrectos'})
         else:
@@ -260,9 +253,36 @@ def register(request):
         form=UserRegisterForm()
         return render(request, 'AppMVT/register.html', {'form':form}) 
 
+
+@login_request
+def agregarAvatar(request):
+    if request.method == 'POST':
+        formulario=AvatarForm(request.POST, request.FILES)
+        if formulario.is_valid():
+            avatarViejo=Avatar.objects.filter(user=request.user)
+            if(len(avatarViejo)>0):
+                avatarViejo.delete()
+            avatar=Avatar(user=request.user, imagen=formulario.cleaned_data['imagen'])
+            avatar.save()
+            return render(request, 'AppMVT/inicio.html', {'usuario':request.user, 'mensaje':'LISTO TU AVATAR!', "imagen":obtenerAvatar(request)})
+    else:
+        formulario=AvatarForm()
+    return render(request, 'AppMVT/agregarAvatar.html', {'form':formulario, 'usuario':request.user, "imagen":obtenerAvatar(request)})
+
+
+def obtenerAvatar(request):
+    lista=Avatar.objects.filter(user=request.user)
+    if len(lista)!=0:
+        imagen=lista[0].imagen.url
+    else:
+        imagen="https://ps.w.org/simple-user-avatar/assets/icon-256x256.png?rev=2413146"
+    return imagen
+
+
+
 """def post(request):
-    current_user=get_object_or_404(User, pk=request.user.pk)
-    if request.method=='POST':
+   form = Post(request.POST)
+   if request.method=='POST':
         form=PostForm(request.POST)
         if form.is_valid():
             post=form.save(commit=False)
@@ -276,7 +296,7 @@ def register(request):
 
 
 def profile(request):
-    return render (request, 'AppMVT/post.html.html')"""
+    return render (request, 'AppMVT/post.html.html')
 
 class BlogHomePageView(TemplateView):
     template_name="blog/inicio.html"
@@ -294,4 +314,4 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post = Post.objects.filter(slug=self.kwargs.get('slug'))
-        return context
+        return context"""

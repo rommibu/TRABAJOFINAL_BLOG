@@ -82,7 +82,7 @@ class Familia(models.Model):
     mail=models.EmailField()
 
     def __str__ (self):
-        return "{0},{1}", format(self.apellido, self.nombre)
+        return self.apellido+" "+self.nombre
 
 class Trabajo(models.Model):
     empresa=models.CharField(max_length=60)
@@ -115,6 +115,9 @@ class Autos(models.Model):
     escuderias = models.CharField(max_length=30,choices=escuderias,default='Ferrari')
     piloto = models.IntegerField()
 
+class Avatar(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    imagen=models.ImageField(upload_to='avatares', null=True, blank=True)
 
 #Para el Post
 """class Profile(models.Model):

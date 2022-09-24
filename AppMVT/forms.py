@@ -38,7 +38,10 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
-        help_texts = {k:"" for k in fields}
+        help_texts = {k:" " for k in fields}
+
+class AvatarForm(forms.Form):
+    imagen= forms.ImageField(label="Imagen")
 
 """class PostForm(forms.ModelForm):
     content=forms.CharField(label='', widget=forms.Textarea(attrs={'row':2, 'placeholder': 'Que esta pasando?'}), requires=True)
@@ -46,3 +49,4 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = Post
         frields = ['content']"""
+        

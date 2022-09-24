@@ -19,20 +19,17 @@
 
 {% for familia in asociados %}
 
-    <ul>
-        <li><h3>{{ familia.nombre }}</h3></li>
-        <li><h3>{{ familia.dni }}</h3></li>
-    </ul>
-
-    <li>{{ p }}</li>
-    <button>
-        <b><a href="{% url 'eliminarAsociado' familia.id %}">ELIMINAR ASOCIADO</a></b><br><br>
-        <b><a href="{% url 'editarAsociado' familia.id %}">EDITAR ASOCIADO</a></b>
-    </button>
-
+<h4>{{ familia.nombre }} - {{ familia.dni }} - {{ familia.mail }}</h4>
+<button>
+    <a href="{% url 'eliminarAsociado' familia.id %}">ELIMINAR ASOCIADO</a>
+    <a href="{% url 'editarAsociado' familia.id %}">EDITAR ASOCIADO</a>
+</button>
+<br>
 {% endfor %}
-
+    
 {% endif %}
+<br>
 <a class="btn btn-success" href="{% url 'familia' %}">AGREGAR ASOCIADO</a>
+       
 
 {% endblock %}
