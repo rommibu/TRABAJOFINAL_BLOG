@@ -1,15 +1,16 @@
 from socket import fromshare
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Coberturasalud, Familia, Trabajo, Autos, Post, Category, Comment
-from AppMVT.forms import FormularioFamilia, FormularioTrabajo, AutosFormu, UserRegisterForm, AvatarForm
+from .models import Coberturasalud, Familia, Trabajo, Autos, Post, Category, Comment, Avatar
+from AppMVT.forms import FormularioFamilia, FormularioTrabajo, AutosFormu, UserRegisterForm, AvatarForm, UserEditForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 import datetime
 #from django.contrib.auth.mixins import loginRequiredMixi
 from django.contrib.auth.decorators import login_required
 
+
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm 
 
 from .models import*
 from django.contrib import messages
@@ -19,23 +20,23 @@ from django.views.generic import TemplateView
 
 
 def inicio(request):
-    return render(request, "AppMVT/inicio.html")
+    return render(request, "AppMVT/inicio.html", {"imagen":obtenerAvatar(request)})
 
 
 def conocenos(request):
-    return render(request, "AppMVT/conocenos.html")
+    return render(request, "AppMVT/conocenos.html", {"imagen":obtenerAvatar(request)})
 
 
 def prestadores(request):
-    return render(request, "AppMVT/prestadores.html")
+    return render(request, "AppMVT/prestadores.html", {"imagen":obtenerAvatar(request)})
 
 
 def quienes_somos(request):
-    return render(request, "AppMVT/quienes_somos.html")
+    return render(request, "AppMVT/quienes_somos.html", {"imagen":obtenerAvatar(request)})
 
 
 def leyes(request):
-    return render(request, "AppMVT/leyes.html")
+    return render(request, "AppMVT/leyes.html", {"imagen":obtenerAvatar(request)})
    
 def Cobertura_salud(request):
     # return render(request, "AppMVT/cobertura.html")
@@ -52,16 +53,11 @@ def Cobertura_salud(request):
         denominacion="Apross", codigo=41325, fecha_creacion="2022-2-18")
     Cobertura4.save()
     lista = [Cobertura1, Cobertura2, Cobertura3, Cobertura4]
-    return render(request, "AppMVT/cobertura.html", {"listado": lista})
-
+    return render(request, "AppMVT/cobertura.html", {"listado": lista, "imagen":obtenerAvatar(request)})
+    
 
 def trabajo_titular(request):
-    return render(request, "AppMVT/trabajo.html")
-    #Trabajo=trabajo(empresa="Tecnofull", antiguedad= 20, profesion="Tecnico", contrato="Propietario")
-    # Trabajo.save()
-    #texto=f"Descripcion de trabajo agregado: empresa{Trabajo.empresa} antiguedad: {Trabajo.antiguedad} profesion: {Trabajo.profesion} contrato{Trabajo.contrato}"
-    # return HttpResponse(texto)
-
+    return render(request, "AppMVT/trabajo.html", {"imagen":obtenerAvatar(request)})
 
 def familia(request):
 
@@ -104,12 +100,17 @@ def formularioTrabajo(request):
             return render(request, "AppMVT/inicio.html", {"mensaje": "Ingreso algun dato incorrecto, por favor verifique!"})
     else:
         form = FormularioTrabajo()
-        return render(request, "AppMVT/formularioTrabajo.html", {"formulario": form})
+        lista=Avatar.objects.filter(user=request.user)
+        if len(lista)!=0:
+            imagen=lista[0].imagen.url
+        else:
+            imagen:None
+        return render(request, "AppMVT/formularioTrabajo.html", {"formulario": form, "imagen":obtenerAvatar(request)})
 
 def leerFamilia(request):
     asociados=Familia.objects.all()
     print(asociados)
-    return render (request, "AppMVT/leerFamilia.html", {"asociados":asociados})
+    return render (request, "AppMVT/leerFamilia.html", {"asociados":asociados, "imagen":obtenerAvatar(request)})
 
 
 def busquedaFamilia(request):
@@ -119,7 +120,7 @@ def eliminarAsociado(request, id):
     family=Familia.objects.get(id=id)
     family.delete()
     asociados=Familia.objects.all()
-    return render(request, "AppMVT/leerFamilia.html", {"asociados":asociados})
+    return render(request, "AppMVT/leerFamilia.html", {"asociados":asociados, "imagen":obtenerAvatar(request)})
 
 
 def editarAsociado(request, id):
@@ -160,7 +161,7 @@ def buscar(request):
 def listar_trabajos(request):
     trabajos = Trabajo.objects.all()
     contexto = {'trabajos':trabajos}
-    return render (request, "AppMVT/trabajo.html", contexto)
+    return render (request, "AppMVT/trabajo.html", contexto), {"imagen":obtenerAvatar(request)}
 
 
 # Creo la la vista que corresponde a formulario
@@ -222,7 +223,7 @@ def Buscar(request):
 
 
 def login_request(request):
-    if request.method == "POST":
+    if request.method=="POST":
         form=AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             usu=request.POST["username"]
@@ -239,7 +240,7 @@ def login_request(request):
             return render(request, 'AppMVT/login.html', {"form":form,'mensaje': 'Usuario o contraseña incorrectos'}) 
     else:
         form=AuthenticationForm()
-        return render(request, 'AppMVT/login.html', {'form':form})
+        return render(request, 'AppMVT/login.html', {'form':form, "imagen":obtenerAvatar(request)})
 
 
 def register(request):
@@ -253,8 +254,24 @@ def register(request):
         form=UserRegisterForm()
         return render(request, 'AppMVT/register.html', {'form':form}) 
 
+#@login_request
+def editarPefil(request):
+    usuario=request.user
+    if request.method=="POST":
+        form=UserEditForm(request.POST, instance=usuario)
+        if form.is_valid():
+            usuario.first_name=form.cleaned_data["fist_name"]
+            usuario.last_name=form.cleaned_data["last_name"]
+            usuario.email=form.cleaned_data["email"]
+            usuario.password1=form.cleaned_data["password1"]
+            usuario.password2=form.cleaned_data["password"]
+            usuario.save()
+            return render(request, 'AppMVT/inicio.html', {'mensaje':f"Perfil de {usuario} ya editado"})
+    else:
+        form= UserEditForm(instance=usuario)
+    return render(request, 'AppMVT/editarPerfil.html', {'form':form, usuario:'usuario',"imagen":obtenerAvatar(request)})
 
-@login_request
+#@login_request
 def agregarAvatar(request):
     if request.method == 'POST':
         formulario=AvatarForm(request.POST, request.FILES)
@@ -264,7 +281,7 @@ def agregarAvatar(request):
                 avatarViejo.delete()
             avatar=Avatar(user=request.user, imagen=formulario.cleaned_data['imagen'])
             avatar.save()
-            return render(request, 'AppMVT/inicio.html', {'usuario':request.user, 'mensaje':'LISTO TU AVATAR!', "imagen":obtenerAvatar(request)})
+            return render(request, 'AppMVT/inicio.html', {'usuario':request.user, 'mensaje':'LISTO TU AVATAR!'})
     else:
         formulario=AvatarForm()
     return render(request, 'AppMVT/agregarAvatar.html', {'form':formulario, 'usuario':request.user, "imagen":obtenerAvatar(request)})

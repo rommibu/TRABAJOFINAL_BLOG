@@ -1,0 +1,24 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+
+{% block titulo_de_pagina %}
+<h1 class="mb-5">EDICION DE PERFIL DE {{ USUARIO }}</h1>
+{% endblock %}
+
+{% block contenido %}
+<br><br><br><br>
+<center>
+<h1>FORMULARIO EDICION DE PERFIL</h1>
+<h1>{{ mensaje }}</h1>
+<form action="{% url 'editarPerfil' %}" method="POST"> {% csrf_token %}
+
+    {{ form.as_P }}
+    <button type="submit">GUARDAR CAMBIOS DE PERFIL</button>
+    
+</form>
+</center>   
+    
+
+{% endblock %}

@@ -12,6 +12,7 @@ admin.site.register(Coberturasalud)
 admin.site.register(Familia)
 admin.site.register(Trabajo)
 admin.site.register(Autos)
+admin.site.register(Avatar)
 
 
 @admin.register(models.Post)

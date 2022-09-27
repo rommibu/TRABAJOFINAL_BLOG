@@ -21,7 +21,7 @@ urlpatterns = [
     path('busquedaescu/',busquedaescu,name='busquedaescu'),
     path('eliminarAsociado/<id>', eliminarAsociado, name='eliminarAsociado'),
     path('editarAsociado/<id>', editarAsociado, name='editarAsociado'),
-    path('post/', Post, name='post'),
+    #path('post/', post, name='post'),
     path('leerFamilia/',  leerFamilia, name='leerFamilia'),
 
    
@@ -30,4 +30,6 @@ urlpatterns = [
     path('login/', login_request, name='login'),
     path('register/', register, name='register'),
     path('logout/', LogoutView.as_view(template_name='AppMVT/logout.html'), name='logout'),
+    path('editarPerfil/', editarPefil, name='editarPerfil'),
+    path('agregarAvatar/', agregarAvatar, name='agregarAvatar')
 ]

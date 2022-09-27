@@ -43,6 +43,22 @@ class UserRegisterForm(UserCreationForm):
 class AvatarForm(forms.Form):
     imagen= forms.ImageField(label="Imagen")
 
+
+class UserEditForm(UserCreationForm):
+    email=forms.EmailField(label='Modificar E-mail')
+    password1=forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2=forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
+    firstName=forms.CharField(label='Modificar Nombre')
+    lastName=forms.CharField(label='Modificar Apellido')
+
+    class Meta:
+        model = User
+        fields = ['email', 'password1', 'password2', 'first_name', 'last_name']
+        help_texts = {k:"" for k in fields}
+
+class AvatarForm(forms.Form):
+    imagen= forms.ImageField(label="Imagen")
+
 """class PostForm(forms.ModelForm):
     content=forms.CharField(label='', widget=forms.Textarea(attrs={'row':2, 'placeholder': 'Que esta pasando?'}), requires=True)
 
