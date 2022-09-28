@@ -59,10 +59,10 @@ class UserEditForm(UserCreationForm):
 class AvatarForm(forms.Form):
     imagen= forms.ImageField(label="Imagen")
 
-"""class PostForm(forms.ModelForm):
-    content=forms.CharField(label='', widget=forms.Textarea(attrs={'row':2, 'placeholder': 'Que esta pasando?'}), requires=True)
+class PostForm(forms.ModelForm):
+    content=forms.CharField(label='', widget=forms.Textarea(attrs={'row':2, 'placeholder': 'Que esta pasando?'}))
 
     class Meta:
         model = Post
-        frields = ['content']"""
+        fields = ['content']
         

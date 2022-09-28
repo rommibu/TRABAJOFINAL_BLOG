@@ -15,6 +15,7 @@ admin.site.register(Autos)
 admin.site.register(Avatar)
 
 
+
 @admin.register(models.Post)
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('title', 'id', 'status', 'slug', 'author')

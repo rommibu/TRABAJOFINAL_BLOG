@@ -1,11 +1,11 @@
 from socket import fromshare
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Coberturasalud, Familia, Trabajo, Autos, Post, Category, Comment, Avatar
-from AppMVT.forms import FormularioFamilia, FormularioTrabajo, AutosFormu, UserRegisterForm, AvatarForm, UserEditForm
+from AppMVT.forms import FormularioFamilia, FormularioTrabajo, AutosFormu, UserRegisterForm, AvatarForm, UserEditForm, PostForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 import datetime
-#from django.contrib.auth.mixins import loginRequiredMixi
+from django.contrib.auth.mixins import loginRequiredMixi
 from django.contrib.auth.decorators import login_required
 
 
@@ -20,7 +20,7 @@ from django.views.generic import TemplateView
 
 
 def inicio(request):
-    return render(request, "AppMVT/inicio.html", {"imagen":obtenerAvatar(request)})
+    return render(request, "AppMVT/inicio.html", {"imagen":obtenerAvatar(request), "post":post})
 
 
 def conocenos(request):
@@ -36,7 +36,8 @@ def quienes_somos(request):
 
 
 def leyes(request):
-    return render(request, "AppMVT/leyes.html", {"imagen":obtenerAvatar(request)})
+    posteo_leyes=Post.objects.all() #si quiero traer solo leyes, cambio all por filter
+    return render(request, "AppMVT/leyes.html", {"imagen":obtenerAvatar(request), "posts":posteo_leyes})
    
 def Cobertura_salud(request):
     # return render(request, "AppMVT/cobertura.html")
@@ -53,6 +54,7 @@ def Cobertura_salud(request):
         denominacion="Apross", codigo=41325, fecha_creacion="2022-2-18")
     Cobertura4.save()
     lista = [Cobertura1, Cobertura2, Cobertura3, Cobertura4]
+    posteo_leyes=Post.objects.all(status='published')
     return render(request, "AppMVT/cobertura.html", {"listado": lista, "imagen":obtenerAvatar(request)})
     
 
@@ -77,10 +79,10 @@ def familia(request):
             familia.save()
             return render(request, "AppMVT/inicio.html", {"mensaje": "Tu informacion quedo registrada!"})
         else:
-            return render(request, "AppMVT/inicio.html", {"mensaje": "Ingreso algun dato incorrecto, por favor verifique!"})
+            return render(request, "AppMVT/familia.html", {"mensaje": "Ingreso algun dato incorrecto, por favor verifique!"})
     else:
         miFormulario = FormularioFamilia()
-        return render(request, "AppMVT/familia.html", {"formulario": miFormulario})
+        return render(request, "AppMVT/familia.html", {"formulario": miFormulario, "imagen":obtenerAvatar(request)})
 
 
 def formularioTrabajo(request):
@@ -114,7 +116,7 @@ def leerFamilia(request):
 
 
 def busquedaFamilia(request):
-    return render(request, "AppMVT/familia.html")
+    return render(request, "AppMVT/resultadoBusqueda.html")
 
 def eliminarAsociado(request, id):
     family=Familia.objects.get(id=id)
@@ -296,20 +298,19 @@ def obtenerAvatar(request):
     return imagen
 
 
-
-"""def post(request):
-   form = Post(request.POST)
-   if request.method=='POST':
+def post(request):
+    form = Post(request.POST)
+    if request.method=='POST':
         form=PostForm(request.POST)
         if form.is_valid():
             post=form.save(commit=False)
-            post.user=current_user
+            post.user=request.user
             post.save()
             messages.success(request, 'Post enviado')
-            return redirect ('feed')
+            return render(request, 'AppMVT/post.html', {'form':form})
     else:
         form = PostForm()
-    return render(request, 'AppMVT/post.html.html', {'form':form})
+    return render(request, 'AppMVT/post.html', {'form':form})
 
 
 def profile(request):
@@ -331,4 +332,4 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post = Post.objects.filter(slug=self.kwargs.get('slug'))
-        return context"""
+        return context

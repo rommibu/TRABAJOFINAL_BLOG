@@ -33,7 +33,7 @@
                 <a class="button-nav" role="button" href="{% url 'prestadores' %}">Prestadores</a>
                 <a class="button-nav" role="button" href="{% url 'formularioTrabajo' %}">Trabajo</a>
                 <a class="button-nav" role="button" href="{% url 'conocenos' %}">Conocenos</a>
-                <a class="button-nav" role="button" href="{% url 'busquedaFamilia' %}">Asociados</a>  
+                <a class="button-nav" role="button" href="{% url 'familia' %}">Asociados</a>  
                 <a class="button-nav" role="button" href="{% url 'Eventos' %}"> Proximos eventos</a>
                 {% if not request.user.is_authenticated %}
                 <a class="btn btn-primary" href="{% url 'login' %}">INICIA SESION EN PARADIGMA!</a> 
@@ -75,17 +75,14 @@
                     {% if posts %}
                         {% for post in posts %}
                             <div class="post-preview">
-                                <a href="{% url 'detallepost' %}">
+                                <a>
                                     <h2 class="post-title">
-                                        {{ post.titulo }}
+                                        {{ post.title }}
                                     </h2>
-                                    <h3 class="post-subtitle">
-                                        {{ post.descripcion }}
-                                    </h3>
                                 </a>
                                 <p class="post-meta">Escrito por
-                                    <strong>{{ post.autor }}</strong> el
-                                    {{ post.fecha_creacion }}
+                                    <strong>{{ post.author }}</strong> el
+                                    {{ post.published }}
                                 </p>                          
                             </div>
                             <hr>
@@ -120,6 +117,7 @@
                 </div>
             </div>
         </div>
+        <br><br>
         <!-- Icons Grid-->
         <div>
             {% block contenido %}  

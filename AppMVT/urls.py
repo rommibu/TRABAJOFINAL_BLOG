@@ -21,7 +21,7 @@ urlpatterns = [
     path('busquedaescu/',busquedaescu,name='busquedaescu'),
     path('eliminarAsociado/<id>', eliminarAsociado, name='eliminarAsociado'),
     path('editarAsociado/<id>', editarAsociado, name='editarAsociado'),
-    #path('post/', post, name='post'),
+    path('post/', post, name='post'),
     path('leerFamilia/',  leerFamilia, name='leerFamilia'),
 
    

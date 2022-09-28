@@ -3,23 +3,15 @@
 {% load static %}
 
 
-{% if miFormulario.errors %}
-<p style="color:firebrick;">Ingreso algun dato incorrecto, por favor verifique!</p>
-{% endif %}
-
-
-{% block contenido %} 
-
+{% block contenido %}
 
 <center>
+
+<h2>INGRESA TUS DATOS PARA SER PARTE DE PARADIGMA!</h2>
+
     
-{% block titulo_de_pagina %}
-<h1 class="mb-5"></h1> 
-{% endblock %}
-
-
 <form action="{% url 'familia' %}" method="POST"> {% csrf_token %}
-
+    <p class="center">Asociate a nuestro espacio de Servicios Sociales y ten a mano toda la informacion de interes vecinal!</p>
 
 <table>
     {{ formulario.as_table }}
@@ -27,8 +19,23 @@
 
 <input type="submit", value="Enviar">
 
-</center>
 
 </form>
+</center>
+<br><br>
+
+<h2>BUSCA EL ASOCIADO DE TU INTERES</h2>
+
+
+<form action="{% url 'busquedaFamilia' %}" method="GET"> {% csrf_token %}
+
+<p>DNI: <input type="number" name="dni"></p>
+
+
+<input type="submit", value="busquedaFamilia">
+
+</form>
+
+<h2 >{{ mensaje }}</h2>
 
 {% endblock %}
