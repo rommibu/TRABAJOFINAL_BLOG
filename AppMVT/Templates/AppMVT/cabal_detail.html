@@ -1,0 +1,37 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+{% block contenido %} 
+    <h3>IDENTIFICADOR DEL CANAL: {{ object.id}}</h3>
+
+    <h2>LOS CHISMES DEL CANAL</h2>
+
+    {{% for mensaje in object.canalmensaje_set.all %}}
+
+            {% if request.user == mensaje.usuario %}
+                <p>
+                    {{ mensaje.texto }}
+                    <span>
+                        Sos chismoso no?!
+                    </span>
+                </p>    
+            {% else %}
+            <p>
+                <span>
+                    {{ mensaje.usuario }}
+                </span>
+            </p>
+            {% endif %}
+                       
+    {{% endfor %}}
+
+        <h1>CHUSMAS DEL CANAL</h1>
+
+    {% for usuarios in canalusuario_set.all %}
+        <p>
+            {{ usuarios.usuario }}
+        </p>
+    {{% endfor %}}    
+{% endblock %}
+

@@ -36,10 +36,11 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     status = models.CharField(max_length=10, choices=options, default='draft')
     objects= models.Manager()
-    postobjectss = PostObjects()
+    #postobjects = PostObjects()
 
     class Meta:
-        ordering = ("-published",)
+        verbose_name='Post'
+        verbose_name_plural='Post'
 
     def __str__(self):
         return self.title 

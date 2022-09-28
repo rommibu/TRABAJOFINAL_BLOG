@@ -2,23 +2,19 @@
 
 {% load static %}
 
-
 {% block titulo_de_pagina %}
-<h1 class="mb-5">REGISTRO DE USUARIO</h1>
+<h1 class="mb-5">REGISTRATE</h1>
 {% endblock %}
 
+
 {% block contenido %}
-<br><br><br><br>
 <center>
-<h1>FORMULARIO HABILITACION DE USUARIO</h1>
-<h1>{{ mensaje }}</h1>
-<form action="{% url 'register' %}" method="POST"> {% csrf_token %}
+<br><br><br><br>
+<form class="form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
 
-    {{ form.as_P }}
-    <button type="submit">REGISTRATE</button>
-    
+    <button type="submit" id="submit">REGISTRATE</button>
 </form>
-</center>   
-    
-
+</center>
 {% endblock %}

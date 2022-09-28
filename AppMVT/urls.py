@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import * 
+from . import views
 from django.contrib.auth.views import LogoutView, LoginView 
 from django.urls import path, include
 
@@ -23,13 +24,19 @@ urlpatterns = [
     path('editarAsociado/<id>', editarAsociado, name='editarAsociado'),
     path('post/', post, name='post'),
     path('leerFamilia/',  leerFamilia, name='leerFamilia'),
+    path('', views.feed, name='feed'),
+    path('profile/', views.profile, name='profile'),
+    
+   
 
    
     path('familia/list/', AsociadoList.as_view(), name='familia_listar'),
     path('familia/<pk>', AsociadoDetalle.as_view(), name='familia_detalle'),
-    path('login/', login_request, name='login'),
-    path('register/', register, name='register'),
+    path('login/', LoginView.as_view(template_name='AppMVT/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='AppMVT/logout.html'), name='logout'),
+    path('register/', views.register, name='register'),
     path('editarPerfil/', editarPefil, name='editarPerfil'),
-    path('agregarAvatar/', agregarAvatar, name='agregarAvatar')
+    path('agregarAvatar/', agregarAvatar, name='agregarAvatar'),
+    path('<slug:slug>', detallePost, name='detalle_post'),
+    
 ]

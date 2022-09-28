@@ -1,16 +1,20 @@
 from socket import fromshare
+from unicodedata import category
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+
+import AppMVT
 from .models import Coberturasalud, Familia, Trabajo, Autos, Post, Category, Comment, Avatar
 from AppMVT.forms import FormularioFamilia, FormularioTrabajo, AutosFormu, UserRegisterForm, AvatarForm, UserEditForm, PostForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 import datetime
-from django.contrib.auth.mixins import loginRequiredMixi
+#from django.contrib.auth.mixins import loginRequiredMixi
 from django.contrib.auth.decorators import login_required
-
+from django.urls import reverse_lazy
+from AppMVT.forms import UserRegisterForm
 
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm 
+from django.contrib.auth.forms import UserCreationForm 
 
 from .models import*
 from django.contrib import messages
@@ -20,7 +24,13 @@ from django.views.generic import TemplateView
 
 
 def inicio(request):
-    return render(request, "AppMVT/inicio.html", {"imagen":obtenerAvatar(request), "post":post})
+    post = Post.objects.all()
+    return render(request, "AppMVT/inicio.html", {"imagen":obtenerAvatar(request), "posts":post})
+
+
+def detallePost(request,slug):
+    post=get_object_or_404(Post,Slug=slug)
+    return render(request, 'post.html', {'detalle_posts':post})
 
 
 def conocenos(request):
@@ -36,8 +46,7 @@ def quienes_somos(request):
 
 
 def leyes(request):
-    posteo_leyes=Post.objects.all() #si quiero traer solo leyes, cambio all por filter
-    return render(request, "AppMVT/leyes.html", {"imagen":obtenerAvatar(request), "posts":posteo_leyes})
+    return render(request, "AppMVT/leyes.html", {"imagen":obtenerAvatar(request)})
    
 def Cobertura_salud(request):
     # return render(request, "AppMVT/cobertura.html")
@@ -54,7 +63,6 @@ def Cobertura_salud(request):
         denominacion="Apross", codigo=41325, fecha_creacion="2022-2-18")
     Cobertura4.save()
     lista = [Cobertura1, Cobertura2, Cobertura3, Cobertura4]
-    posteo_leyes=Post.objects.all(status='published')
     return render(request, "AppMVT/cobertura.html", {"listado": lista, "imagen":obtenerAvatar(request)})
     
 
@@ -224,10 +232,10 @@ def Buscar(request):
         return render (request, "AppMVT/resultadoevento.html",{"mensaje": "No figurar como registrado, Vamos!! registrate para el evento!!"})
 
 
-def login_request(request):
+"""def login_request(request):
     if request.method=="POST":
-        form=AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
+        formulario=AuthenticationForm(request, data=request.POST)
+        if formulario.is_valid():
             usu=request.POST["username"]
             clave=request.POST["password"]
 
@@ -237,23 +245,29 @@ def login_request(request):
                 login(request, usuario)
                 return render(request, 'AppMVT/inicio.html', {'mensaje':f"Bienvenido a Paradigma {usuario}"})
             else:
-                return render(request, 'AppMVT/login.html', {"form":form,'mensaje': 'Usuario o contraseña incorrectos'})
+                return render(request, 'AppMVT/login.html', {"formulario":formulario,'mensaje': 'Usuario o contraseña incorrectos'})
         else:
-            return render(request, 'AppMVT/login.html', {"form":form,'mensaje': 'Usuario o contraseña incorrectos'}) 
+            return render(request, 'AppMVT/login.html', {"formulario":formulario,'mensaje': 'Usuario o contraseña incorrectos'}) 
     else:
-        form=AuthenticationForm()
-        return render(request, 'AppMVT/login.html', {'form':form, "imagen":obtenerAvatar(request)})
+        formulario=AuthenticationForm()
+        return render(request, 'AppMVT/login.html', {'formulario':formulario, "imagen":obtenerAvatar(request)})"""
+
+
+def feed(request):
+    posts = Post.objects,all()
+    context = {'posts':posts}
+    return render(request, AppMVT/post.html, context)
 
 
 def register(request):
     if request.method=="POST":
-        form= UserRegisterForm(request.POST)
+        form= UserCreationForm(request.POST)
         if form.is_valid():
                 username=form.cleaned_data["username"]
                 form.save()
-                return render(request, 'AppMVT/inicio.html', {'mensaje':f"Usuario {username} creado"})
+                return render(request, 'AppMVT/register.html', {'mensaje':f"Usuario {username} creado"})
     else:
-        form=UserRegisterForm()
+        form=UserCreationForm()
         return render(request, 'AppMVT/register.html', {'form':form}) 
 
 #@login_request
@@ -324,7 +338,7 @@ class BlogHomePageView(TemplateView):
         context["posts"]= Post.postObjects.all()
         return context
 
-class PostDetailView(DetailView):
+"""class PostDetailView(DetailView):
     model = Post
     template_name = 'AppMVT/post-detail.html'
     context_object_name = 'post'
@@ -332,4 +346,4 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post = Post.objects.filter(slug=self.kwargs.get('slug'))
-        return context
+        return context"""

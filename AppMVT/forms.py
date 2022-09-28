@@ -1,5 +1,7 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate
+from AppMVT.models import User
 from django.contrib.auth.models import User
 #importo la libreria
 from django.forms import ModelForm
@@ -38,7 +40,22 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+        labels = {'username': 'Nombre completo', 'email': 'Agrega tu mail'}
         help_texts = {k:" " for k in fields}
+
+class AutenticarForm(forms.ModelForm):
+    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('email', 'password')
+
+"""class clean(self):
+    email = self.cleaned_data['email']
+    password = self.cleaned_data['password']
+
+    if not authenticate(email=email, password=password):
+        raise forms.ValidationError("El mail o contraseña son incorrectos")"""
 
 class AvatarForm(forms.Form):
     imagen= forms.ImageField(label="Imagen")

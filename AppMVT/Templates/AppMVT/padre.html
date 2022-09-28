@@ -1,9 +1,7 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
-
-        {% load static %}
-
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -13,7 +11,7 @@
                 background-color: rgb(107, 164, 230);
             }
         </style>
-        <title>{% block titulo %}SERVICIO VECINAL PARADIGMA ARTE + IDEAS.pe{% endblock titulo %} - Start Bootstrap Theme</title>
+        <title>{% block titulo %}SERVICIO VECINAL PARADIGMA ARTE + IDEAS.pe{% endblock titulo %}- Start Bootstrap Theme</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="Plazoletas.jpg" />
         <!-- Bootstrap icons-->
@@ -33,7 +31,7 @@
                 <a class="button-nav" role="button" href="{% url 'prestadores' %}">Prestadores</a>
                 <a class="button-nav" role="button" href="{% url 'formularioTrabajo' %}">Trabajo</a>
                 <a class="button-nav" role="button" href="{% url 'conocenos' %}">Conocenos</a>
-                <a class="button-nav" role="button" href="{% url 'familia' %}">Asociados</a>  
+                <a class="button-nav" role="button" href="{% url 'familia' %}">Asociados</a> 
                 <a class="button-nav" role="button" href="{% url 'Eventos' %}"> Proximos eventos</a>
                 {% if not request.user.is_authenticated %}
                 <a class="btn btn-primary" href="{% url 'login' %}">INICIA SESION EN PARADIGMA!</a> 
@@ -75,10 +73,13 @@
                     {% if posts %}
                         {% for post in posts %}
                             <div class="post-preview">
-                                <a>
+                                <a href="{% url 'detalle_post' post.slug %}">
                                     <h2 class="post-title">
                                         {{ post.title }}
                                     </h2>
+                                    <h3 class="post-excerpt">
+                                        {{ post.Referencia }}
+                                    </h3>
                                 </a>
                                 <p class="post-meta">Escrito por
                                     <strong>{{ post.author }}</strong> el
@@ -95,8 +96,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        
+        <hr>
         <br><br><br>
         <div class="container">
             <div class="row">

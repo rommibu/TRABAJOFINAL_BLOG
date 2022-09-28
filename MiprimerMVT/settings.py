@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 #import dj_database_url
-#import os
+import os
 
 #from django.core.wsgi import get_wsgi_application
 #os.environ.setdefault ("DJANGO_SETTINGS_MODULE", "miSitio.settings")
@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'ckeditor',
     'import_export',
     'MiprimerMVT',
+    'DM'
+    
+    
     
 ]
 
@@ -69,7 +72,7 @@ ROOT_URLCONF = 'MiprimerMVT.urls'
 TEMPLATES = [   
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "Templates"],
+        'DIRS': ["Templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,7 +128,7 @@ CKEDITOR_CONFIGS = {
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-pe'
+LANGUAGE_CODE = 'es-ar'
 
 TIME_ZONE = 'America/Cordoba'
 
@@ -138,6 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -148,7 +152,12 @@ LOGIN_URL='/AppMVT/login/'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = BASE_DIR / 'media'
+LOGIN_REDIRECT_URL = '/AppMVT/login/'
+
+
+
+
+#MEDIA_ROOT = os.path.join (BASE_DIR / 'media')
 
 
 #db_from_env=dj_database_url.config(conn_max_age=500)

@@ -24,18 +24,15 @@
 </center>
 <br><br>
 
-<h2>BUSCA EL ASOCIADO DE TU INTERES</h2>
+<h2>ASOCIADOS DE NUESTROS SERVICIOS</h2>
 
 
-<form action="{% url 'busquedaFamilia' %}" method="GET"> {% csrf_token %}
-
-<p>DNI: <input type="number" name="dni"></p>
+<form action="{% url 'leerFamilia' %}" method="GET"> {% csrf_token %}
 
 
-<input type="submit", value="busquedaFamilia">
+<input type="submit", value="Conoce nuestros Asociados!">
 
 </form>
 
-<h2 >{{ mensaje }}</h2>
 
 {% endblock %}
