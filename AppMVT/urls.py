@@ -22,13 +22,11 @@ urlpatterns = [
     path('busquedaescu/',busquedaescu,name='busquedaescu'),
     path('eliminarAsociado/<id>', eliminarAsociado, name='eliminarAsociado'),
     path('editarAsociado/<id>', editarAsociado, name='editarAsociado'),
-    path('post/', post, name='post'),
+    path('post/<int:pk>/', post, name='post'),
     path('leerFamilia/',  leerFamilia, name='leerFamilia'),
     path('', views.feed, name='feed'),
     path('profile/', views.profile, name='profile'),
     
-   
-
    
     path('familia/list/', AsociadoList.as_view(), name='familia_listar'),
     path('familia/<pk>', AsociadoDetalle.as_view(), name='familia_detalle'),

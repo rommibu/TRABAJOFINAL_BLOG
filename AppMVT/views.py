@@ -2,6 +2,8 @@ from socket import fromshare
 from unicodedata import category
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
+
 
 import AppMVT
 from .models import Coberturasalud, Familia, Trabajo, Autos, Post, Category, Comment, Avatar
@@ -312,7 +314,7 @@ def obtenerAvatar(request):
     return imagen
 
 
-def post(request):
+def post(request, pk):
     form = Post(request.POST)
     if request.method=='POST':
         form=PostForm(request.POST)

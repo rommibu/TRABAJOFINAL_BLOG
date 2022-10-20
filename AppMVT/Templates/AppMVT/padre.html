@@ -39,7 +39,6 @@
                 <a class="btn btn-primary" href="{% url 'agregarAvatar' %}">ELIGE TU AVATAR!</a>
                 {% else %}
                 <p>Bienvenido {{ user.username }}</p>
-                <img src="{{ imagen }}" alt="">
                 <a class="btn btn-primary" href="{% url 'logout' %}">CERRAR SESION DE PARADIGMA</a> 
                 {% endif %}
             </div>
@@ -73,7 +72,7 @@
                     {% if posts %}
                         {% for post in posts %}
                             <div class="post-preview">
-                                <a href="{% url 'detalle_post' post.slug %}">
+                                <a href="{% url 'post' post.id %}">
                                     <h2 class="post-title">
                                         {{ post.title }}
                                     </h2>
