@@ -33,6 +33,7 @@
                 <a class="button-nav" role="button" href="{% url 'conocenos' %}">Conocenos</a>
                 <a class="button-nav" role="button" href="{% url 'familia' %}">Asociados</a> 
                 <a class="button-nav" role="button" href="{% url 'Eventos' %}"> Proximos eventos</a>
+                <a class="button-nav" role="button" href="{% url 'inbox' %}"> Mensajeria</a>
                 {% if not request.user.is_authenticated %}
                 <a class="btn btn-primary" href="{% url 'login' %}">INICIA SESION EN PARADIGMA!</a> 
                 <a class="btn btn-primary" href="{% url 'register' %}">REGISTRATE Y ASOCIATE!</a> 
@@ -63,8 +64,32 @@
                     </div>
                 </div>
             </div>
-           
+        <title>
+            DM
+        </title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            body{
+                background:#fafafa;
+            }
+            h1, h2, h3, p small{
+                font-family: 'Roboto', sans-serif;
+            }
+            .div_main{
+                width:60%
+                margin: 50px auto;
+            }
+        </style>
         </header>
+        <div class="div_main"<
+            {% block contenedor %}
+
+            {% endblock %}
+
         <br><br><br><br>
         <div class="container">
             <div class="row">

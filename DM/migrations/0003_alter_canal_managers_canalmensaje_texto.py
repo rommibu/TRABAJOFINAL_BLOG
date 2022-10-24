@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterModelManagers(
             name='canal',
             managers=[
-                ('ojects', django.db.models.manager.Manager()),
+                ('objects', django.db.models.manager.Manager()),
             ],
         ),
         migrations.AddField(

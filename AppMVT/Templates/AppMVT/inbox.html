@@ -1,0 +1,47 @@
+{% extends "AppMVT/padre.html" %}
+
+{% load static %}
+
+{% block contenido %} 
+
+<h1>
+    Bienvenido {{ user }}. Inbox
+</h1>
+
+{% for inbox in inbox %}
+<div class="div_inbox">
+
+    {% for second_user in inbox.calusuario_set.all %}
+        {% if second_user.usuario == request.user %}
+        {% else %}
+        <a href="{% url 'detailms' second_user.usuario.username %}">
+            <p>
+                {{ second.user.usuario }}
+            </p>
+            <small>
+                ({{ inbox.canalmensaje_set.count }}) Mensajes
+            </small>
+        </a>
+        {% endif %}
+    {% endfor %}
+    {% if inbox.canalmensaje_set.count != 0 %}
+    <div class="div_ms_inbox">
+        {% with ultimo_mensaje=inbox.canalmensaje_set.last %}
+        <p>
+            Mensaje: {{ ultimo_mensaje.texto }}
+        </p>
+        <p>
+            usuario: {{ ultimo_mensaje.usuario }}
+        </p>
+    </div>
+    {% else %}
+    
+</div>
+
+{% empy %}
+<h2>
+    Inbox Vacio
+</h2>
+{% endfor %}
+
+{% endblock %}
